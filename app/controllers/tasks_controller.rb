@@ -21,14 +21,6 @@ class TasksController < ApplicationController
       flash.now[:danger] = "Task が投稿されませんでした"
       rander :new
     end
-    
-    private
-    
-    #Strong Parameter
-    def task_params
-      params.require(:task).permit(:content)
-    end
-      
   end
   
   def edit
@@ -47,12 +39,19 @@ class TasksController < ApplicationController
     end
   end
   
-  def destory
+  def destroy
     @task = Task.find(params[:id])
-    @task.destory
+    @task.destroy
     
     flash[:success] = "Task は正常に削除されました"
     redirect_to tasks_url
   end
+  
+  private
+    
+    #Strong Parameter
+    def task_params
+      params.require(:task).permit(:content)
+    end
   
 end
